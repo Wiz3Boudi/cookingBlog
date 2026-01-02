@@ -1,12 +1,12 @@
 const { Sequelize } = require('sequelize');
 
 const model = new Sequelize(
-    process.env.RECIPE_DB_NAME,
-    process.env.RECIPE_DB_USERNAME,
-    process.env.MYDB_PASSWORD,
+    process.env.DB_NAME,
+    process.env.USER,
+    process.env.PASSWORD,
     {
-        host: process.env.DB_HOST,
-        port: process.env.RECIPE_PORT || 3306,
+        host: process.env.HOST,
+        port: process.env.DB_PORT || 16407,
         dialect: 'mysql',
         dialectModule: require('mysql2'),
         logging: false,
