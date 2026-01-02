@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const model = new Sequelize(
     process.env.RECIPE_DB_NAME,
@@ -7,7 +7,7 @@ const model = new Sequelize(
     {
         host: process.env.DB_HOST,
         port: process.env.RECIPE_PORT,
-        dialect: process.env.RECIPE_DB_dialect
+        dialect: 'mysql'
     }
 );
 model.authenticate().then(() =>
