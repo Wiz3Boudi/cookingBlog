@@ -24,7 +24,7 @@
     "express-validator": "^7.3.1",
     "multer": "^2.0.2",
     "mysql": "^2.18.1",
-    "mysql2": "^3.15.3",
+    "mysql2": "^3.16.0",
     "nodemon": "^3.1.11",
     "sequelize": "^6.37.7"
   }
