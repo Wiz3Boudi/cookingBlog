@@ -2,7 +2,6 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
-// Check presence of required environment variables (do not print secrets)
 const requiredVars = ['DB_NAME', 'USER', 'PASSWORD', 'HOST'];
 requiredVars.forEach(v => {
     if (!process.env[v]) {
@@ -10,14 +9,11 @@ requiredVars.forEach(v => {
     }
 });
 
-// Build dialectOptions with optional CA support and connect timeout
 const dialectOptions = {};
 const host = process.env.HOST || '';
 const useSSL = process.env.DB_USE_SSL === 'true' || host.includes('aivencloud.com') || host.includes('aiven');
 if (useSSL) {
     dialectOptions.ssl = {};
-
-    // Priority: DB_SSL_CA_FILE -> DB_SSL_CA -> server/certs/ca.pem
     let caContent = null;
     if (process.env.DB_SSL_CA_FILE) {
         try {
@@ -54,7 +50,6 @@ if (useSSL) {
         console.warn('DB SSL enabled but no CA provided. Connecting without certificate verification. Recommended: add a CA at server/certs/ca.pem or set DB_SSL_CA_FILE.');
     }
 
-    // optional connection timeout
     dialectOptions.connectTimeout = parseInt(process.env.DB_CONNECT_TIMEOUT, 10) || 10000;
 }
 
@@ -76,7 +71,6 @@ const model = new Sequelize(
     }
 );
 
-// Try connecting with retries and exponential backoff
 async function tryConnect(retries = 5, delay = 1000) {
     let attempt = 0;
     while (attempt < retries) {

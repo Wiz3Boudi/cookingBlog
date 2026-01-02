@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-
 const express = require('express');
 const path = require('path');
 const cors = require('cors')
@@ -51,7 +50,6 @@ app.set('layout', 'layouts/main');
 const router = require('./server/routes/category.route')
 app.use('/', router);
 
-// Health-check endpoint
 const healthRouter = require('./server/routes/health.route');
 app.use('/health', healthRouter);
 

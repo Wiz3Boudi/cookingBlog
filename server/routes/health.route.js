@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/DB.Config.cloud');
 
-// GET /health - returns DB status
 router.get('/', async (req, res) => {
     try {
         await db.authenticate();
