@@ -5,8 +5,10 @@ const expressLayout = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -20,7 +22,6 @@ process.on('warning', (warning) => {
     }
 });
 
-const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +31,10 @@ app.use(expressLayout);
 
 app.use(cookieParser('cookingBlogSecure'));
 app.use(session(({
-    secret: 'cookingBlogSecureSecret',
+    secret: process.env.SESSION_SECRET || 'cookingBlogSecure',
+    store: new SequelizeStore({
+        db: require('./server/models/DB.Config.cloud')
+    }),
     saveUninitialized: true,
     resave: true
 })));
