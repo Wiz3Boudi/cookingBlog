@@ -8,7 +8,9 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 process.on('warning', (warning) => {
     if (warning.name === 'DeprecationWarning') {
