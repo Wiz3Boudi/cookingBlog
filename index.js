@@ -29,9 +29,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayout);
 
-app.use(cookieParser('cookingBlogSecure'));
+app.use(cookieParser(process.env.COOKIE_SECRET || process.env.SESSION_SECRET));
 app.use(session(({
-    secret: process.env.SESSION_SECRET || 'cookingBlogSecure',
+    secret: process.env.SESSION_SECRET || process.env.COOKIE_SECRET,
     store: new SequelizeStore({
         db: require('./server/models/DB.Config.cloud')
     }),
