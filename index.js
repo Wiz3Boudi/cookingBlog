@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const cors = require('cors')
@@ -5,14 +9,9 @@ const expressLayout = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+const sessionStore = require('./server/models/session.model')
 const app = express();
 const port = process.env.PORT || 3000;
-
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
 
 process.on('warning', (warning) => {
     if (warning.name === 'DeprecationWarning') {
@@ -21,8 +20,6 @@ process.on('warning', (warning) => {
         console.log('Code:', warning.code);
     }
 });
-
-
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,14 +27,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayout);
 
 app.use(cookieParser(process.env.COOKIE_SECRET || process.env.SESSION_SECRET));
-app.use(session(({
+
+app.use(session({
     secret: process.env.SESSION_SECRET || process.env.COOKIE_SECRET,
-    store: new SequelizeStore({
-        db: require('./server/models/DB.Config.cloud')
-    }),
-    saveUninitialized: true,
-    resave: true
-})));
+    store: sessionStore, 
+    saveUninitialized: false,
+    resave: false, 
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,  
+        sameSite: 'lax', 
+        maxAge: 24 * 60 * 60 * 1000 
+    }
+}));
+
 app.use(flash());
 
 app.set('view engine', 'ejs');
