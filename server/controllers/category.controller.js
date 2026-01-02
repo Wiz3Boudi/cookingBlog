@@ -124,7 +124,7 @@ const searchRecipe = async (req, res) => {
 
 const exploreLatest = async (req, res) => {
     try {
-        const recipe = await recipeModel.findAll();
+        const recipe = await recipeModel.findAll({order: [['id', 'DESC']], raw: true, limit: 20 });
         if (!recipe) return res.status(200).json({ status: 'fail !', message: 'data not found !' });
         return res.render('explore-latest', { title: 'Explore-latest', recipe });
     } catch (error) {

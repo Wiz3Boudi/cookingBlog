@@ -49,8 +49,11 @@ app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('layout', 'layouts/main');
 
 const router = require('./server/routes/category.route')
-
 app.use('/', router);
+
+// Health-check endpoint
+const healthRouter = require('./server/routes/health.route');
+app.use('/health', healthRouter);
 
 
 app.listen(port, () => console.log(`Server is running on port: ${port}`));
