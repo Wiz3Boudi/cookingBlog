@@ -1,0 +1,174 @@
+body {
+    font-family: sans-serif;
+    background-image: url(/public/i-like-food.svg);
+    padding: 0;
+    margin: 0;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    padding-top: 1rem;
+    background-color: white;
+}
+
+.nav-link ul li {
+    display: inline-flex;
+    padding: 0 0.4rem;
+    list-style: none;
+}
+
+.nav-link ul li a {
+    text-decoration: none;
+    color: darkslategray;
+}
+
+.nav-link ul li a:hover {
+    text-decoration: underline;
+}
+
+.inputSearch {
+    max-width: 300px;
+    width: 100%;
+    height: 30px;
+    border: 0.1px solid #6f6e75;
+    border-radius: 3px;
+    padding: 0.9rem;
+    color: black;
+}
+
+.inputSearch:focus {
+    outline: none;
+}
+
+main {
+    margin: 0 3rem;
+    padding: 0 2rem;
+    background-color: white;
+    border: 1px solid white;
+    box-shadow: 1px 0 50px 0 rgba(77, 65, 65, 0.171);
+}
+
+.padding-Left-right {
+    display: flex;
+    align-content: center;
+    gap: 1rem;
+    padding-bottom: 3rem;
+}
+
+.interface {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 2rem;
+}
+
+.artical {
+    padding-top: 4rem;
+    justify-self: start;
+}
+
+.head-h-one h1 {
+    max-width: 400px;
+    width: 100%;
+}
+
+.imageContainar img {
+    max-width: 507px;
+    width: 100%;
+    max-height: 410px;
+    height: 100%;
+}
+
+.head-link {
+    display: flex;
+    gap: 2rem;
+}
+
+.head-link a,
+.submit-button {
+    border: #6f6e75 1px solid;
+    padding: 0.7rem;
+    text-decoration: none;
+    border-radius: 4px;
+    width: 140px;
+    text-align: center;
+}
+
+.imageContainar {
+    justify-self: center;
+}
+
+.head-prapraph {
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+}
+
+.head-prapraph p {
+    font-family: sans-serif;
+    color: darkslategrey;
+}
+
+.categoreyContainer {
+    padding: 2rem 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+}
+
+.category-food {
+    max-width: 250px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+
+.hover-over-category-food:hover,
+.lastet-recipe-cards a:hover {
+    transform: scale(1.01);
+    transition: transform 1s ease;
+}
+
+.lastet-recipe-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+}
+
+.latest-recipe-section-img img {
+    max-width: 300px;
+    width: 100%;
+    max-height: 300px;
+    border-radius: 5px;
+}
+
+.title-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.lastet-recipe-cards a {
+    text-align: center;
+    text-decoration: none;
+}
+
+.submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;
+}
+.exploreCategroy:hover{
+    transform: scale(1.01);
+    transition: transform 1s ease ;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.searchResult:hover{
+    transform: scale(1.01);
+    transition: transform 1s ease;
+}

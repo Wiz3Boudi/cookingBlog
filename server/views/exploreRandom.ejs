@@ -1,0 +1,26 @@
+<nav style="padding-bottom: 30px;">
+    <ol style="display: flex; flex-direction: row; list-style: none; gap: 0.5rem; text-align: center;">
+        <li><a class="btn-primary" href="/">Home</a></li>
+        <span>/</span>
+        <p> Random Recipe </p>
+    </ol>
+</nav>
+<div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; row-gap: 3rem; text-align: center;">
+        <% if (randomRecipe !='' ) { %>
+            <div id="randomContainer" class="searchResult">
+                <a href="/recipe/<%= randomRecipe.id %>" style="text-decoration: none;">
+                    <img style="max-width:300px; width: 100%; max-height: 300px; height: 100%; border-radius: 5px;"
+                        src="/uploads/<%= randomRecipe.image  %>" alt="">
+                    <p style="padding: 1rem; text-align: center; color: darkslategrey;">
+                        <%= randomRecipe.name %>
+                    </p>
+                </a>
+            </div>
+            <% } else { %>
+                <div>
+                    <p>No matches !</p>
+                </div>
+                <% } %>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<h2> Explore Categories</h3>
+    <nav style="padding-bottom: 3rem;">
+        <ol
+            style="display: flex; flex-direction: row; list-style: none; gap: 0.5rem; text-align: center;">
+            <li><a class="btn-primary" href="/">Home</a></li>
+            <span>/</span>
+            <li><a class="btn-primary" href="/categories"> Categories </a> </li>
+            <span>/</span>
+            <p> <%= categoryIds[0].category %></p>
+        </ol>
+    </nav>
+
+    <div
+        style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; row-gap: 2rem;">
+        <% if (categoryIds != '') { %>
+        <% categoryIds.forEach((element, index) => { %>
+        <div class="searchResult">
+            <a href="/recipe/<%= element.id %>"
+                style="text-decoration: none;">
+                <img style="max-width:300px; width: 100%; max-height: 300px; height: 100%; border-radius: 5px;"
+                    src="/uploads/<%= element.image %>" alt="">
+                <p
+                    style="padding: 1rem; text-align: center; color: darkslategrey;">
+                    <%= element.name %>
+                </p>
+            </a>
+        </div>
+        <% }); %>
+        <% } else { %>
+        <div>
+            <p>Items not found.</p>
+        </div>        
+        <% } %>
+    </div>

@@ -1,0 +1,81 @@
+<nav>
+    <ol
+        style="display: flex; flex-direction: row; list-style: none; gap: 0.5rem; text-align: center;">
+        <li><a class="btn-primary" href="/">Home</a></li>
+        <span>/</span>
+        <li><a class="btn-primary" href="/categories">Categories</a></li>
+        <span>/</span>
+        <li><a class="btn-primary"
+                href="/category/<%- recipe.category %>"
+                style="text-decoration: none;">
+                <%- recipe.category %>
+            </a>
+        </li>
+        <span>/</span>
+        <div style="color: darkslategrey;">
+            <%- recipe.name %>
+        </div>
+    </ol>
+</nav>
+
+<div
+    style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; justify-self: center; gap: 2rem;">
+    <% if (recipe != '') { %>
+    <div>
+        <img src="/uploads/<%- recipe.image %>"
+            alt="recipe-Details"
+            style="width: 100%; border-radius: 5px; height: 500px;">
+    </div>
+    <div style="display:flex; flex-direction: column;">
+        <h2>
+            <%- recipe.name %>
+        </h2>
+        <p style="margin-top: -8px;">
+            <i class="bi bi-tags"></i>
+            <%- recipe.category %>
+        </p>
+        <h5>Cooking Instructions</h5>
+        <p>
+            <%- recipe.description %>
+        </p>
+        <p><strong>Email: </strong>
+            <a href="">b
+                <%- recipe.email %>
+            </a>
+        </p>
+        <h4>Ingredients</h4>
+        <ul>
+            <% if (recipe.ingredients && Array.isArray(recipe.ingredients)) { %>
+            <% if (recipe.ingredients.length > 0) { %>
+            <% recipe.ingredients.forEach((item, index) => { %>
+            <li style="list-style: none;">
+                <%- item %>
+            </li>
+            <% if (index < recipe.ingredients.length - 1) { %>
+            <hr>
+
+            
+            <% } %>
+            <% }) %>
+            <% } else { %>
+            <li>No ingredients listed.</li>
+
+            
+            <% } %>
+            <% } else if (recipe.ingredients && typeof recipe.ingredients === 'string') { %>
+            <li style="list-style: none;">
+                <%- recipe.ingredients %>
+            </li>
+            <% } else { %>
+            <li>Items not found.</li>
+
+            
+            <% } %>
+        </ul>
+    </div>
+
+
+
+    
+    <% } %>
+</div>

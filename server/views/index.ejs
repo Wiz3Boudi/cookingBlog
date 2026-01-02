@@ -1,0 +1,148 @@
+<div class="interface">
+  <div class="artical">
+    <div class="head-h-one">
+      <h1 class="display-5 fw-bold">
+        Huge selection of delicios recipe ideas
+      </h1>
+    </div>
+    <div class="head-prapraph">
+      <p>
+        Explore our huge selection of delicios recipe ideas: easy deserts
+        delicios vegan and vegetarian dinner ideas gorgeous pasta recipe , quick
+        backes, family-friendly meals and gluten-free recipe.
+      </p>
+    </div>
+    <div class="head-link">
+      <a class="btn btn-dark" href="/explore-latest">Explore latest</a>
+      <a class="btn btn-light" href="/random-recipe">Random Recipe</a>
+    </div>
+
+  </div>
+  <div class="imageContainar">
+    <img src="/uploads/<%= data.index[0].filename %>" alt="Hero image lolo ">
+  </div>
+</div>
+<div class="categoreyContainer">
+  <% if(data !='' ) { %>
+    <% data.categories.forEach((item, index)=>{%>
+      <a style="text-decoration: none;" class="hover-over-category-food" href="/category/<%= item.name %>">
+        <div>
+          <img class="category-food" src="uploads/<%= item.filename %>" alt="<%= item.name %>">
+        </div>
+        <div style="color: darkslategrey;" id="<%= item.name.toLowerCase() %>" class="food-name">
+          <%= item.name %>
+        </div>
+      </a>
+
+      <%})%>
+        <% } %>
+          <a class="hover-over-category-food" href="/categories">
+            <div>
+              <img class="category-food" src="uploads/<%- data.viewAll.filename %>" alt="View All">
+            </div>
+            <div id="view_all" class="food-name">
+              View All
+            </div>
+          </a>
+</div>
+<section class="latest-recipe-section">
+  <div class="title-link">
+    <h4>latest Recipe</h4>
+    <a style="text-decoration: none;" href="/explore-latest">Explore Latest</a>
+  </div>
+  <div class="lastet-recipe-cards">
+
+    <% if(data !='' ) { %>
+      <% data.recipe.forEach((item, index)=>{ %>
+        <a style="color: darkslategray;" href="/recipe/<%= item.id %>">
+          <div class="latest-recipe-section-img">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+          </div>
+          <p style="color: darkslategray;">
+            <%= item.name %>
+          </p>
+        </a>
+        <% }) %>
+          <% } %>
+  </div>
+</section>
+<section class="latest-recipe-section">
+  <div class="title-link">
+    <h4>Egyptian</h4>
+    <a style="text-decoration: none;" href="/category/egyptian"> See more of Egyptian</a>
+  </div>
+
+  <div class="lastet-recipe-cards">
+
+    <% if(data !='' ) { %>
+      <% data.egyptian.forEach((item, index)=>{ %>
+        <a href="/recipe/<%= item.id %>">
+          <div class="latest-recipe-section-img">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+          </div>
+          <p style="color: darkslategrey;">
+            <%= item.name %>
+          </p>
+        </a>
+        <% }) %>
+          <% } %>
+  </div>
+</section>
+
+<section class="latest-recipe-section">
+  <div class="title-link">
+    <h5>Sudanese</h5>
+    <a style="text-decoration: none;" href="/category/Sudanese">see more of Sudanese </a>
+  </div>
+
+  <div class="lastet-recipe-cards">
+
+    <% if(data !='' ) { %>
+      <% data.sudanese.forEach((item, index)=>{ %>
+        <a href="/recipe/<%= item.id %>">
+          <div class="latest-recipe-section-img">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+          </div>
+          <p style="color: darkslategrey;">
+            <%= item.name %>
+          </p>
+        </a>
+        <% }) %>
+          <% } %>
+  </div>
+</section>
+
+<section class="latest-recipe-section">
+  <div class="title-link">
+    <h5>American</h5>
+    <a style="text-decoration: none;" href="/category/american">See more of American</a>
+  </div>
+  <div class="lastet-recipe-cards">
+
+    <% if(data !='' ) { %>
+      <% data.american.forEach((item, index)=>{ %>
+        <a href="/recipe/<%= item.id %>">
+          <div class="latest-recipe-section-img">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+          </div>
+          <p style="color: darkslategrey;">
+            <%= item.name %>
+          </p>
+        </a>
+        <% }) %>
+          <% } %>
+  </div>
+</section>
+
+<section class="submit">
+  <div class="submit-img">
+    <img src="/uploads/<%= data.index[1].filename %>" alt="submit image section">
+  </div>
+  <div class="submit-title">
+    <h1>Publish your recipe for FREE today</h1>
+  </div>
+  <div class="submit-pragraph">
+    <p>Publish your recipe in front of thousand of people for free</p>
+  </div>
+  <a class="btn btn-dark" href="/submit-recipe"> Submit recipe</a>
+</section>

@@ -1,0 +1,30 @@
+<nav>
+    <ol style="display: flex; flex-direction: row; list-style: none; gap: 0.5rem; text-align: center;">
+        <li><a class="btn-primary" href="/">Home</a></li>
+        <span>/</span>
+        <p> Explore Latest </p>
+    </ol>
+</nav>
+<div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; row-gap: 3rem;">
+        <% if (recipe !='' ) { %>
+            <% recipe.forEach((element, index)=> { %>
+                <div class="searchResult">
+                    <a href="/recipe/<%= element.id %>" style="text-decoration: none;">
+                        <img style="max-width:300px; width: 100%; max-height: 300px; height: 100%; border-radius: 5px;"
+                            src="/uploads/<%= element.image %>" alt="">
+                        <p style="padding: 1rem; text-align: center; color: darkslategrey;">
+                            <%= element.name %>
+                        </p>
+                    </a>
+                </div>
+                <% }); %>
+                    <% } else { %>
+                        <div>
+                            <p>No Items found. !</p>
+                        </div>
+
+
+                        <% } %>
+    </div>
+</div>
