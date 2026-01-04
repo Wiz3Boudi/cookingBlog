@@ -12,15 +12,6 @@ const model = new Sequelize(
         dialect: 'mysql',
         dialectModule: require('mysql2'),
         logging: false,
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: process.env.NODE_ENV === 'production',
-                ca: process.env.DB_SSL_CA_FILE_PATH ?
-                    fs.readFileSync(path.resolve(process.env.DB_SSL_CA_FILE_PATH)) :
-                    undefined
-            }
-        },
         pool: {
             acquire: parseInt(process.env.DB_POOL_ACQUIRE, 10) || 30000,
             idle: parseInt(process.env.DB_POOL_IDLE, 10) || 10000
