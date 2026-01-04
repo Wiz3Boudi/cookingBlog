@@ -19,7 +19,7 @@
 
   </div>
   <div class="imageContainar">
-    <img src="/uploads/<%= data.index[0].filename %>" alt="Hero image lolo ">
+    <img src="/uploads/<%= data.index[0].filename %>" alt="Hero image lolo " loading="lazy">
   </div>
 </div>
 <div class="categoreyContainer">
@@ -27,7 +27,7 @@
     <% data.categories.forEach((item, index)=>{%>
       <a style="text-decoration: none;" class="hover-over-category-food" href="/category/<%= item.name %>">
         <div>
-          <img class="category-food" src="uploads/<%= item.filename %>" alt="<%= item.name %>">
+          <img class="category-food" src="uploads/<%= item.filename %>" alt="<%= item.name %>" loading="lazy">
         </div>
         <div style="color: darkslategrey;" id="<%= item.name.toLowerCase() %>" class="food-name">
           <%= item.name %>
@@ -38,7 +38,7 @@
         <% } %>
           <a class="hover-over-category-food" href="/categories">
             <div>
-              <img class="category-food" src="uploads/<%- data.viewAll.filename %>" alt="View All">
+              <img class="category-food" src="uploads/<%- data.viewAll.filename %>" alt="View All" loading="lazy">
             </div>
             <div id="view_all" class="food-name">
               View All
@@ -56,7 +56,7 @@
       <% data.recipe.forEach((item, index)=>{ %>
         <a style="color: darkslategray;" href="/recipe/<%= item.id %>">
           <div class="latest-recipe-section-img">
-            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px" loading="lazy">
           </div>
           <p style="color: darkslategray;">
             <%= item.name %>
@@ -78,7 +78,7 @@
       <% data.egyptian.forEach((item, index)=>{ %>
         <a href="/recipe/<%= item.id %>">
           <div class="latest-recipe-section-img">
-            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px" loading="lazy">
           </div>
           <p style="color: darkslategrey;">
             <%= item.name %>
@@ -96,12 +96,11 @@
   </div>
 
   <div class="lastet-recipe-cards">
-
     <% if(data !='' ) { %>
       <% data.sudanese.forEach((item, index)=>{ %>
         <a href="/recipe/<%= item.id %>">
           <div class="latest-recipe-section-img">
-            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px" loading="lazy">
           </div>
           <p style="color: darkslategrey;">
             <%= item.name %>
@@ -118,12 +117,11 @@
     <a style="text-decoration: none;" href="/category/american">See more of American</a>
   </div>
   <div class="lastet-recipe-cards">
-
     <% if(data !='' ) { %>
       <% data.american.forEach((item, index)=>{ %>
         <a href="/recipe/<%= item.id %>">
           <div class="latest-recipe-section-img">
-            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px">
+            <img class="" src="uploads/<%= item.image %>" alt="latest recipe added" width="200px" height="250px" loading="lazy">
           </div>
           <p style="color: darkslategrey;">
             <%= item.name %>
@@ -136,7 +134,7 @@
 
 <section class="submit">
   <div class="submit-img">
-    <img src="/uploads/<%= data.index[1].filename %>" alt="submit image section">
+    <img src="/uploads/<%= data.index[1].filename %>" alt="submit image section" loading="lazy">
   </div>
   <div class="submit-title">
     <h1>Publish your recipe for FREE today</h1>

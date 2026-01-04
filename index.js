@@ -52,6 +52,4 @@ app.use('/', router);
 
 const healthRouter = require('./server/routes/health.route');
 app.use('/health', healthRouter);
-
-
 app.listen(port, () => console.log(`Server is running on port: ${port}`));
