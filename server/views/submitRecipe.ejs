@@ -14,13 +14,6 @@
                 <%= infoSubmitObj %>
             </div>
 
-
-
-
-
-
-
-
             
             <% } %>
             <% if (infoErrorObj != '') { %>
@@ -28,31 +21,27 @@
                 <%= infoErrorObj %>
             </div>
 
-
-
-
-
-
-
-
             
             <% } %>
             <div class="row g-3">
                 <div class="col-12">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email"
+                    <input value="<%= formValues.email || '' %>"
+                        type="email" name="email" id="email"
                         class="form-control">
                 </div>
                 <div class="col-12">
                     <label for="name" class="form-label">Recipe Name</label>
-                    <input type="text" name="name" id="name"
-                        class="form-control">
+                    <input value="<%= formValues.name || '' %>"
+                        type="text" name="name" id="name" class="form-control">
                 </div>
                 <div class="col-12">
                     <label for="description"
                         class="form-label">Description</label>
                     <textarea name="description" id="description"
-                        class="form-control" cols="30" rows="4"></textarea>
+                        class="form-control" cols="30" rows="4">
+                        <%= formValues.description || '' %>
+                    </textarea>
                 </div>
                 <div class="col-12">
                     <label for="name" class="form-label">Ingredients</label><br>
@@ -64,7 +53,9 @@
                         </small>
                         <div style="padding-top: 1rem;" id="ingredientList"
                             class="ingredeintDiv mb-1">
-                            <input placeholder="ingredients" type="text"
+                            <input
+                                value="<%= formValues.ingredients || '' %>"
+                                placeholder="ingredients" type="text"
                                 name="ingredients" class="form-control"
                                 style="max-width: 770px;;">
                         </div>
@@ -72,9 +63,10 @@
                     <div id="ingredientTemplate" style="display: none;">
                         <div class="ingredientsInput">
                             <div style="margin: 0.4rem 0; display: flex;">
-                                <input style="display: inline;"
-                                    name="ingredients" type="text"
-                                    placeholder="Ingredient"
+                                <input
+                                    value="<%= formValues.name || '' %>"
+                                    style="display: inline;" name="ingredients"
+                                    type="text" placeholder="Ingredient"
                                     class="form-control">
                                 <span class="remove-btn"
                                     style="cursor: pointer;">
@@ -95,7 +87,7 @@
                     Category</label>
                 <select class="form-select form-control" name="category"
                     aria-label="Category">
-                    <option selected> Select Category</option>
+                    <option selected>  Select Category</option>
                     <% if (cutCategoriesValues != '') { %>
                     <% cutCategoriesValues.forEach((item, index) => { %>
                     <option value="<%= item %>">
@@ -109,13 +101,15 @@
                     <option value="Chinese">Chinese</option>
                     <option value="Mexican">Mexican</option>
                     <option value="Indian">Indian</option>
+
+                    
                     <% } %>
                 </select>
                 <p
                     style="margin-bottom: -14px; margin-top: 5px; text-align: start;">
                     Or</p>
-                <label for="name"></label>
-                <input name="enterCategory" class="form-control" type="text"
+                <label for="enterCategory"></label>
+                <input value="<%= formValues.enterCategory || '' %>" name="enterCategory" class="form-control" type="text"
                     placeholder="Enter Category">
             </div>
             <div class="col-12">

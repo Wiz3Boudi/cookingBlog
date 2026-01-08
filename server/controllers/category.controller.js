@@ -4,17 +4,21 @@ const recipeModel = require('../models/recipe.model')
 const { validationResult } = require('express-validator');
 const allowedCategory = require('../models/allowedCategory');
 const connection = require('../models/DB.Config.cloud')
+const imagekit = require('../utils/imagekit');
 
-const navLogoAndFooter = async (req, res, next) => {
+const navLogoAndFooterAndAllData = async (req, res, next) => {
     try {
         const data = await Category.General.findAll({ raw: true, limit: 2 });
         const background = await Category.single_image.findAll({ raw: true });
+
+        if (!data || data.length < 0 || typeof data === null || typeof data === 'undefined') {
+            return res.locals.itemNotFound = { message: 'No data' }
+        }
         res.locals.navLogoAndFooterData = {
             data,
-            background
+            background,
         }
         next();
-
     } catch (error) {
         console.log(error.message);
         next();
@@ -124,7 +128,7 @@ const searchRecipe = async (req, res) => {
 
 const exploreLatest = async (req, res) => {
     try {
-        const recipe = await recipeModel.findAll({order: [['id', 'DESC']], raw: true, limit: 20 });
+        const recipe = await recipeModel.findAll({ order: [['id', 'DESC']], raw: true, limit: 20 });
         if (!recipe) return res.status(200).json({ status: 'fail !', message: 'data not found !' });
         return res.render('explore-latest', { title: 'Explore-latest', recipe });
     } catch (error) {
@@ -155,11 +159,12 @@ const submitRecipe = async (req, res) => {
     try {
         const infoErrorObj = req.flash('infoError');
         const infoSubmitObj = req.flash('infoSubmit');
+        const formValues = req.flash('infoFormData')[0] || {};
 
         const allowedCategoryOnSubmitSelect = await allowedCategory.findAll({ attributes: ['categories'], raw: true });
 
         const cutCategoriesValues = allowedCategoryOnSubmitSelect.map((category) => category.categories);
-        return res.render('submitRecipe', { title: 'Submit-recipe', infoErrorObj, infoSubmitObj, cutCategoriesValues });
+        return res.render('submitRecipe', { title: 'Submit-recipe', infoErrorObj, infoSubmitObj, formValues, cutCategoriesValues });
 
     } catch (error) {
         return res.status(500).json({ error: error.message })
@@ -168,42 +173,62 @@ const submitRecipe = async (req, res) => {
 
 const submitRecipeOnPost = async (req, res) => {
     try {
-        const convertFirstCharToUppercase = req.body.enterCategory.split('').map((element, index) => index === 0 ? element.toUpperCase() : element).join('');
-        const selectedCategory = convertFirstCharToUppercase || req.body.category;
-        if (selectedCategory === 'Select Category') {
-            req.flash('infoError', 'Please select or enter new category');
-            return res.redirect('/submit-recipe');
-        };
-        if (!req.body.ingredients) {
-            req.flash('infoError', 'Ingredients cannot be empty')
-        }
-        let getAllowedCategoriesData = await allowedCategory.findAll({ attributes: ['categories'], raw: true });
-        getAllowedCategoriesData = getAllowedCategoriesData.map((item) => item.categories);
-        if (!getAllowedCategoriesData.includes(selectedCategory)) await allowedCategory.create({ categories: selectedCategory });
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            req.flash('infoError', errors.array()[0].msg);
-            return res.redirect('/submit-recipe');
+            req.flash('infoError', errors.errors[0].msg);
+            req.flash('infoFormData', req.body);
+            return req.session.save(() => res.redirect('/submit-recipe'));
         }
-        if (!selectedCategory) {
-            req.flash('infoError', 'Category cannot be be empty !')
+
+        const { enterCategory, category, email, name, description, ingredients } = req.body;
+
+        let selectedCategory = category;
+        if (enterCategory && enterCategory.trim() !== '') {
+            selectedCategory = enterCategory.charAt(0).toUpperCase() + enterCategory.slice(1);
+        }
+
+        if (!selectedCategory || selectedCategory === 'Select Category') {
+            req.flash('infoError', 'Please select or enter a valid category');
+            req.flash('infoFormData', req.body);
+            return req.session.save(() => res.redirect('/submit-recipe'));
         }
 
         if (!req.file) {
-            req.flash('infoError', 'Image file is required !');
-            return res.redirect('/submit-recipe');
-        };
-        const { email, name, description, ingredients: [...ingredients] } = req.body;
-        const insert = await recipeModel.create({
-            name, description, email, ingredients, category: selectedCategory, image: req.file.filename
-        })
-        await insert.save();
-        req.flash('infoSubmit', 'Submitted successfully !');
-        return res.redirect('/submit-recipe')
+            req.flash('infoError', 'Image file is required!');
+            req.flash('infoFormData', req.body);
+            return req.session.save(() => res.redirect('/submit-recipe'));
+        }
+
+        let getAllowedCategoriesData = await allowedCategory.findAll({ attributes: ['categories'] });
+        let categoryList = getAllowedCategoriesData.map((item) => item.categories);
+
+        if (!categoryList.includes(selectedCategory)) {
+            await allowedCategory.create({ categories: selectedCategory });
+        }
+
+        const uploadResponse = await imagekit.upload({
+            file: req.file.buffer,
+            fileName: req.file.originalname,
+            folder: '/images/cooking-blog',
+            useUniqueFileName: true,
+        });
+
+        await recipeModel.create({
+            name,
+            description,
+            email,
+            ingredients,
+            category: selectedCategory,
+            image: uploadResponse.name
+        });
+
+        req.flash('infoSubmit', 'Submitted successfully!');
+        return req.session.save(() => res.redirect('/submit-recipe'));
+
     } catch (error) {
-        console.log('Error', error)
-        req.flash('infoError', error.message);
-        return res.redirect('/submit-recipe');
+        console.error('SERVER ERROR:', error);
+        req.flash('infoError', 'Something went wrong: ' + error.message);
+        return req.session.save(() => res.redirect('/submit-recipe'));
     }
 }
 
@@ -217,7 +242,7 @@ const about = async (req, res) => {
 
 module.exports = {
     homePage,
-    navLogoAndFooter,
+    navLogoAndFooterAndAllData,
     about,
     exploreCategories,
     categoryDetails,

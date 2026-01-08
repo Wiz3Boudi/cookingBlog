@@ -7,7 +7,7 @@
             <% sreachresult.forEach((element, index) => { %>
                 <div class="searchResult">
                     <a href="/recipe/<%= element.id %>" style="text-decoration: none;">
-                        <img style="max-width:300px; width: 100%; max-height: 300px; height: 100%; border-radius: 5px;" src="/uploads/<%= element.image  %>" alt="" loading="lazy">
+                        <img style="max-width:300px; width: 100%; max-height: 300px; height: 100%; border-radius: 5px;" src="https://ik.imagekit.io/hm7dcbuvf/images/cooking-blog/<%= element.image  %>" alt="" loading="lazy">
                         <p style="padding: 1rem; text-align: center; color: darkslategrey;"> <%= element.name %> </p>
                     </a>
                 </div>
