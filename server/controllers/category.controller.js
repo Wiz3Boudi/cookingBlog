@@ -173,6 +173,14 @@ const submitRecipe = async (req, res) => {
 
 const submitRecipeOnPost = async (req, res) => {
     try {
+        if (req.body.ingredients) {
+        let rawIngredients = Array.isArray(req.body.ingredients)
+            ? req.body.ingredients
+            : [req.body.ingredients];
+            req.body.ingredients = rawIngredients
+                .map(i => i.trim())
+                .filter(i => i !== "");
+        }
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             req.flash('infoError', errors.errors[0].msg);
