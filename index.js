@@ -8,9 +8,10 @@ const expressLayout = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const sessionStore = require('./server/models/session.model')
-const app = express();
+const sessionStore = require('./server/models/session.model');
 const port = process.env.PORT || 3000;
+
+const app = express();
 
 process.on('warning', (warning) => {
     if (warning.name === 'DeprecationWarning') {
@@ -29,16 +30,19 @@ app.use(cookieParser(process.env.COOKIE_SECRET || process.env.SESSION_SECRET));
 
 app.use(session({
     secret: process.env.SESSION_SECRET || process.env.COOKIE_SECRET,
-    store: sessionStore, 
+    store: sessionStore,
     saveUninitialized: false,
-    resave: false, 
+    resave: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,  
-        sameSite: 'lax', 
-        maxAge: 24 * 60 * 60 * 1000 
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
 
 app.use(flash());
 
